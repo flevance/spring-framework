@@ -103,12 +103,15 @@ public abstract class BeanDefinitionReaderUtils {
 	public static String generateBeanName(
 			BeanDefinition definition, BeanDefinitionRegistry registry, boolean isInnerBean)
 			throws BeanDefinitionStoreException {
-
+		// 获取bean的类名,获取的是全限定的类名
 		String generatedBeanName = definition.getBeanClassName();
+		// 如果这个类没有类名?
 		if (generatedBeanName == null) {
+			// 则获取这个类的父类,命名为全限定类名$child
 			if (definition.getParentName() != null) {
 				generatedBeanName = definition.getParentName() + "$child";
 			}
+			// 如果没有父类,则为bean工厂的名称$created
 			else if (definition.getFactoryBeanName() != null) {
 				generatedBeanName = definition.getFactoryBeanName() + "$created";
 			}

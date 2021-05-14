@@ -16,9 +16,6 @@ public class MyApplicationTest {
 
 		AbstractApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath*:application.xml");
 		Person person = applicationContext.getBean("person", Person.class);
-		System.out.println("开始刷新上下文");
-		applicationContext.refresh();
-		System.out.println("刷新上下文成功");
 		System.out.println(person.getName());
 
 	}

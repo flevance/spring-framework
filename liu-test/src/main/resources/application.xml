@@ -6,4 +6,6 @@
 		<property name="age" value="27"/>
 		<property name="name" value="Java"/>
 	</bean>
+
+	<bean id="myBeanPostProcessor" class="com.liu.beanPostProcessor.MyBeanPostProcessor"/>
 </beans>
