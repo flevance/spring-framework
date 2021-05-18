@@ -174,7 +174,7 @@ public abstract class AbstractApplicationEventMulticaster
 		Class<?> sourceType = (source != null ? source.getClass() : null);
 		ListenerCacheKey cacheKey = new ListenerCacheKey(eventType, sourceType);
 
-		// Potential new retriever to populate
+		// Potential new retriever to populate/**/
 		CachedListenerRetriever newRetriever = null;
 
 		// Quick check for existing entry on ConcurrentHashMap

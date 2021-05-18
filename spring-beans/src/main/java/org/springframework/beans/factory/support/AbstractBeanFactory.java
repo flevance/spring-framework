@@ -1195,6 +1195,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 * and resolving aliases to canonical names.
 	 * @param name the user-specified name
 	 * @return the transformed bean name
+	 * 返回Bean名称，必要时去除工厂取消引用前缀，并将别名解析为规范名称。
 	 */
 	protected String transformedBeanName(String name) {
 		return canonicalName(BeanFactoryUtils.transformedBeanName(name));
@@ -1278,6 +1279,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 * @return a (potentially merged) RootBeanDefinition for the given bean
 	 * @throws NoSuchBeanDefinitionException if there is no bean with the given name
 	 * @throws BeanDefinitionStoreException in case of an invalid bean definition
+	 * 返回合并的RootBeanDefinition，如果指定的bean对应于子bean定义，则遍历父bean定义
 	 */
 	protected RootBeanDefinition getMergedLocalBeanDefinition(String beanName) throws BeansException {
 		// Quick check on the concurrent map first, with minimal locking.

@@ -160,6 +160,7 @@ final class PostProcessorRegistrationDelegate {
 
 		// Do not initialize FactoryBeans here: We need to leave all regular beans
 		// uninitialized to let the bean factory post-processors apply to them!
+		// 不要在这里初始化FactoryBeans：我们需要保留所有未初始化的常规bean，以使bean工厂后处理器对其应用！
 		String[] postProcessorNames =
 				beanFactory.getBeanNamesForType(BeanFactoryPostProcessor.class, true, false);
 
@@ -204,6 +205,7 @@ final class PostProcessorRegistrationDelegate {
 
 		// Clear cached merged bean definitions since the post-processors might have
 		// modified the original metadata, e.g. replacing placeholders in values...
+		// 清除缓存的合并bean定义，因为后处理器可能已经修改了原始元数据，例如替换值中的占位符...
 		beanFactory.clearMetadataCache();
 	}
 
@@ -243,6 +245,7 @@ final class PostProcessorRegistrationDelegate {
 		}
 
 		// First, register the BeanPostProcessors that implement PriorityOrdered.
+		// 首先，注册实现PriorityOrdered的BeanPostProcessor。
 		sortPostProcessors(priorityOrderedPostProcessors, beanFactory);
 		registerBeanPostProcessors(beanFactory, priorityOrderedPostProcessors);
 
@@ -270,11 +273,13 @@ final class PostProcessorRegistrationDelegate {
 		registerBeanPostProcessors(beanFactory, nonOrderedPostProcessors);
 
 		// Finally, re-register all internal BeanPostProcessors.
+		// 最后，重新注册所有内部BeanPostProcessor
 		sortPostProcessors(internalPostProcessors, beanFactory);
 		registerBeanPostProcessors(beanFactory, internalPostProcessors);
 
 		// Re-register post-processor for detecting inner beans as ApplicationListeners,
 		// moving it to the end of the processor chain (for picking up proxies etc).
+		// 重新注册后处理器以将内部bean检测为ApplicationListener，并将其移至处理器链的末尾（用于拾取代理等）
 		beanFactory.addBeanPostProcessor(new ApplicationListenerDetector(applicationContext));
 	}
 
@@ -295,22 +300,26 @@ final class PostProcessorRegistrationDelegate {
 
 	/**
 	 * Invoke the given BeanDefinitionRegistryPostProcessor beans.
+	 * 调用给定的BeanDefinitionRegistryPostProcessor Bean。
 	 */
 	private static void invokeBeanDefinitionRegistryPostProcessors(
 			Collection<? extends BeanDefinitionRegistryPostProcessor> postProcessors, BeanDefinitionRegistry registry) {
 
 		for (BeanDefinitionRegistryPostProcessor postProcessor : postProcessors) {
+			// 在标准初始化之后，修改应用程序上下文的内部bean定义注册表。 所有常规bean定义都将被加载，但尚未实例化任何bean。 这允许在下一个后处理阶段开始之前添加更多的bean定义。
 			postProcessor.postProcessBeanDefinitionRegistry(registry);
 		}
 	}
 
 	/**
 	 * Invoke the given BeanFactoryPostProcessor beans.
+	 * 调用给定的BeanFactoryPostProcessor bean
 	 */
 	private static void invokeBeanFactoryPostProcessors(
 			Collection<? extends BeanFactoryPostProcessor> postProcessors, ConfigurableListableBeanFactory beanFactory) {
 
 		for (BeanFactoryPostProcessor postProcessor : postProcessors) {
+			// 在标准初始化之后，修改应用程序上下文的内部Bean工厂。 所有bean定义都将被加载，但尚未实例化任何bean。 这甚至可以覆盖或添加属性，甚至可以用于初始化bean
 			postProcessor.postProcessBeanFactory(beanFactory);
 		}
 	}

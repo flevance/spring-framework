@@ -1,9 +1,9 @@
 package com.liu.beanPostProcessor;
 
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 
 /**
  * @author ljt
@@ -11,18 +11,18 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
  * @date 2021/05/12 上午11:48
  * @Version 1.0.0
  */
-public class MyBeanPostProcessor implements BeanPostProcessor {
-
+public class MyBeanPostProcessor implements BeanDefinitionRegistryPostProcessor {
 
 	@Override
-	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-		System.out.println("Before加载:" + beanName + ",内容为:" +  bean.toString());
-		return bean;
+	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+		;
+		System.out.println("Before加载:postProcessBeanDefinitionRegistry");
 	}
 
 	@Override
-	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-		System.out.println("After加载:" + beanName + ",内容为:" +  bean.toString());
-		return bean;
+	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+		System.out.println("postProcessBeanFactory");
 	}
+
+
 }
