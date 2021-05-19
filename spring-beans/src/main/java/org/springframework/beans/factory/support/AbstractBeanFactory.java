@@ -237,6 +237,15 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 * not for actual use
 	 * @return an instance of the bean
 	 * @throws BeansException if the bean could not be created
+	 * 返回一个实例，该实例可以是指定bean的共享或独立的。
+	 *
+	 * 参数：
+	 * 名称–要检索的bean的名称
+	 * requiredType –要检索的bean的必需类型
+	 * args –使用显式参数创建bean实例时要使用的参数（仅在创建新实例而不是检索现有实例时才应用）
+	 * typeCheckOnly –是否为类型检查而不是实际使用获取实例
+	 * 返回值：
+	 * Bean的一个实例
 	 */
 	@SuppressWarnings("unchecked")
 	protected <T> T doGetBean(
@@ -1788,11 +1797,20 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 * @param beanName the canonical bean name
 	 * @param mbd the merged bean definition
 	 * @return the object to expose for the bean
+	 * 获取给定bean实例的对象，如果是FactoryBean，则可以是bean实例本身或其创建的对象。
+	 *
+	 * 参数：
+	 * beanInstance –共享的bean实例
+	 * 名称–可能包含工厂取消引用前缀的名称
+	 * beanName –规范的bean名称
+	 * mbd –合并的bean定义
 	 */
 	protected Object getObjectForBeanInstance(
 			Object beanInstance, String name, String beanName, @Nullable RootBeanDefinition mbd) {
 
 		// Don't let calling code try to dereference the factory if the bean isn't a factory.
+		// 如果Bean不是工厂，则不要让调用代码尝试取消引用工厂。
+		// 首先判断是不是工厂Bean的名称
 		if (BeanFactoryUtils.isFactoryDereference(name)) {
 			if (beanInstance instanceof NullBean) {
 				return beanInstance;
@@ -1809,6 +1827,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		// Now we have the bean instance, which may be a normal bean or a FactoryBean.
 		// If it's a FactoryBean, we use it to create a bean instance, unless the
 		// caller actually wants a reference to the factory.
+		// 现在我们有了bean实例，它可以是普通bean或FactoryBean。如果它是FactoryBean，则除非调用者实际上想要引用该工厂，否则我们将使用它来创建bean实例。
 		if (!(beanInstance instanceof FactoryBean)) {
 			return beanInstance;
 		}

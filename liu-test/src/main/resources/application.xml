@@ -8,4 +8,6 @@
 	</bean>
 
 	<bean id="myBeanPostProcessor" class="com.liu.beanPostProcessor.MyBeanPostProcessor"/>
+
+	<bean id="myFactoryBean" class="com.liu.factoryBean.MyFactoryBean"/>
 </beans>
