@@ -78,6 +78,12 @@ public abstract class BeanFactoryUtils {
 	 * @param name the name of the bean
 	 * @return the transformed name
 	 * @see BeanFactory#FACTORY_BEAN_PREFIX
+	 * 返回实际的bean名称，删除工厂取消引用前缀（如果有的话，还删除重复的工厂前缀（如果找到））。
+	 *
+	 * 参数：
+	 * 名称–豆的名称
+	 * 返回值：
+	 * 转换后的名称
 	 */
 	public static String transformedBeanName(String name) {
 		Assert.notNull(name, "'name' must not be null");

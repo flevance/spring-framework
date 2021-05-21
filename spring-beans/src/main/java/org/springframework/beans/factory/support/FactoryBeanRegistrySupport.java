@@ -78,6 +78,12 @@ public abstract class FactoryBeanRegistrySupport extends DefaultSingletonBeanReg
 	 * @param beanName the name of the bean
 	 * @return the object obtained from the FactoryBean,
 	 * or {@code null} if not available
+	 * 如果有缓存形式可用，则从给定的FactoryBean中获取要暴露的对象。 快速检查以最小化同步。
+	 *
+	 * 参数：
+	 * beanName –豆的名称
+	 * 返回值：
+	 * 从FactoryBean获得的对象；如果不可用，则返回null
 	 */
 	@Nullable
 	protected Object getCachedObjectForFactoryBean(String beanName) {
@@ -92,6 +98,14 @@ public abstract class FactoryBeanRegistrySupport extends DefaultSingletonBeanReg
 	 * @return the object obtained from the FactoryBean
 	 * @throws BeanCreationException if FactoryBean object creation failed
 	 * @see org.springframework.beans.factory.FactoryBean#getObject()
+	 * 获取一个对象以从给定的FactoryBean中公开。
+	 *
+	 * 参数：
+	 * factory – FactoryBean实例
+	 * beanName –豆的名称
+	 * shouldPostProcess – Bean是否要进行后处理
+	 * 返回值：
+	 * 从FactoryBean获得的对象
 	 */
 	protected Object getObjectFromFactoryBean(FactoryBean<?> factory, String beanName, boolean shouldPostProcess) {
 		if (factory.isSingleton() && containsSingleton(beanName)) {

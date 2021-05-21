@@ -173,6 +173,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	private final Set<String> alreadyCreated = Collections.newSetFromMap(new ConcurrentHashMap<>(256));
 
 	/** Names of beans that are currently in creation. */
+	// 当前正在创建的bean的名称。
 	private final ThreadLocal<Object> prototypesCurrentlyInCreation =
 			new NamedThreadLocal<>("Prototype beans currently in creation");
 
@@ -274,14 +275,17 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		else {
 			// Fail if we're already creating this bean instance:
 			// We're assumably within a circular reference.
+			// 如果我们已经在创建此bean实例，则失败：大概在循环引用中。
 			if (isPrototypeCurrentlyInCreation(beanName)) {
 				throw new BeanCurrentlyInCreationException(beanName);
 			}
 
 			// Check if bean definition exists in this factory.
+			// 检查该工厂中是否存在bean定义。
 			BeanFactory parentBeanFactory = getParentBeanFactory();
 			if (parentBeanFactory != null && !containsBeanDefinition(beanName)) {
 				// Not found -> check parent.
+				// 找不到->检查父项。
 				String nameToLookup = originalBeanName(name);
 				if (parentBeanFactory instanceof AbstractBeanFactory) {
 					return ((AbstractBeanFactory) parentBeanFactory).doGetBean(
@@ -1215,6 +1219,12 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 * Determine the original bean name, resolving locally defined aliases to canonical names.
 	 * @param name the user-specified name
 	 * @return the original bean name
+	 * 确定原始bean名称，将本地定义的别名解析为规范名称。
+	 *
+	 * 参数：
+	 * 名称–用户指定的名称
+	 * 返回值：
+	 * 原始的豆名
 	 */
 	protected String originalBeanName(String name) {
 		String beanName = transformedBeanName(name);
@@ -1841,8 +1851,10 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		}
 		if (object == null) {
 			// Return bean instance from factory.
+			// 工厂返回bean实例
 			FactoryBean<?> factory = (FactoryBean<?>) beanInstance;
 			// Caches object obtained from FactoryBean if it is a singleton.
+			// 缓存从FactoryBean获得的对象（如果是单例）。
 			if (mbd == null && containsBeanDefinition(beanName)) {
 				mbd = getMergedLocalBeanDefinition(beanName);
 			}
@@ -1931,6 +1943,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 * @return if this bean factory contains a bean definition with the given name
 	 * @see #containsBean
 	 * @see org.springframework.beans.factory.ListableBeanFactory#containsBeanDefinition
+	 * 检查此bean工厂是否包含具有给定名称的bean定义。 不考虑该工厂可能参与的任何层次结构。在未找到任何缓存的单例实例时，由containsBean调用。
+	 * 根据具体bean工厂实现的性质，此操作可能会很昂贵（例如，由于在外部注册表中进行目录查找）。 但是，对于可列出的bean工厂，这通常只相当于本地哈希查找：因此，该操作是该处公共接口的一部分。 在这种情况下，此模板方法和公共接口方法都可以使用相同的实现。
 	 */
 	protected abstract boolean containsBeanDefinition(String beanName);
 

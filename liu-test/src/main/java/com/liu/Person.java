@@ -1,12 +1,14 @@
 package com.liu;
 
+import org.springframework.beans.factory.SmartInitializingSingleton;
+
 /**
  * @author ljt
  * @Description
  * @date 2021/05/07 上午11:50
  * @Version 1.0.0
  */
-public class Person {
+public class Person implements SmartInitializingSingleton {
 
 	private int age;
 
@@ -26,6 +28,11 @@ public class Person {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public void afterSingletonsInstantiated() {
+		System.out.println("afterSingletonsInstantiated: Person初始化的结果是:" + this.toString());
 	}
 
 	@Override
