@@ -40,6 +40,12 @@ import org.springframework.util.ObjectUtils;
  * @author Juergen Hoeller
  * @since 09.11.2003
  * @see BeanDefinition#getConstructorArgumentValues
+ * 构造函数参数值的持有者，通常作为Bean定义的一部分。
+ * 支持构造函数参数列表中特定索引的值，以及按类型支持通用参数匹配的值。
+ * 自从：
+ * 2003年9月11日
+ * 也可以看看：
+ * BeanDefinition.getConstructorArgumentValues
  */
 public class ConstructorArgumentValues {
 

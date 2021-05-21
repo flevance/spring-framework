@@ -54,6 +54,8 @@ import org.springframework.util.StringUtils;
  * @see GenericBeanDefinition
  * @see RootBeanDefinition
  * @see ChildBeanDefinition
+ * 具体的完整BeanDefinition类的基类，其中排除了GenericBeanDefinition ， RootBeanDefinition和ChildBeanDefinition常用属性。
+ * 自动装配常数与AutowireCapableBeanFactory接口中定义的常数匹配。
  */
 @SuppressWarnings("serial")
 public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccessor
@@ -658,6 +660,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Return the bean names that this bean depends on.
+	 * 返回该bean依赖的bean名称
 	 */
 	@Override
 	@Nullable

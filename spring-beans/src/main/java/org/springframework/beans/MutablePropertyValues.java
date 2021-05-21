@@ -40,6 +40,7 @@ import org.springframework.util.StringUtils;
  * @author Juergen Hoeller
  * @author Rob Harrop
  * @since 13 May 2001
+ * PropertyValues接口的默认实现。 允许简单地操作属性，并提供构造函数以支持从Map​​进行深度复制和构造。
  */
 @SuppressWarnings("serial")
 public class MutablePropertyValues implements PropertyValues, Serializable {

@@ -110,6 +110,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	private final Map<String, Set<String>> containedBeanMap = new ConcurrentHashMap<>(16);
 
 	/** Map between dependent bean names: bean name to Set of dependent bean names. */
+	// 在相关的Bean名称之间映射：Bean名称到一组相关的Bean名称
 	private final Map<String, Set<String>> dependentBeanMap = new ConcurrentHashMap<>(64);
 
 	/** Map between depending bean names: bean name to Set of bean names for the bean's dependencies. */
@@ -456,6 +457,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	 * @param beanName the name of the bean to check
 	 * @param dependentBeanName the name of the dependent bean
 	 * @since 4.0
+	 * 确定指定的从属bean是否已注册为依赖于给定bean或其任何传递依赖。
 	 */
 	protected boolean isDependent(String beanName, String dependentBeanName) {
 		synchronized (this.dependentBeanMap) {
@@ -464,14 +466,19 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	}
 
 	private boolean isDependent(String beanName, String dependentBeanName, @Nullable Set<String> alreadySeen) {
+		// 获取已经检查过的Set集合,如果不为null且已经存在了这个beanName,那么就直接return false
 		if (alreadySeen != null && alreadySeen.contains(beanName)) {
 			return false;
 		}
+		// 将beanName转换成规范的名称
 		String canonicalName = canonicalName(beanName);
+		// 根据这个bean的名称获取其依赖的bean的Set
 		Set<String> dependentBeans = this.dependentBeanMap.get(canonicalName);
+		// 如果依赖的Bean为空,则直接return false
 		if (dependentBeans == null) {
 			return false;
 		}
+		// 如果依赖的Bean的Set中含有依赖的这个Bean,则return TRUE
 		if (dependentBeans.contains(dependentBeanName)) {
 			return true;
 		}

@@ -50,6 +50,10 @@ import org.springframework.util.Assert;
  * @author Juergen Hoeller
  * @see GenericBeanDefinition
  * @see ChildBeanDefinition
+ * 根bean定义表示合并的bean定义，该定义在运行时支持Spring BeanFactory中的特定bean。 它可能是由多个相互继承的原始bean定义创建的，通常定义为GenericBeanDefinitions 。 根bean定义本质上是运行时的“统一” bean定义视图。
+ * 根Bean定义也可以用于在配置阶段注册单个Bean定义。 但是，从Spring 2.5开始，以编程方式注册bean定义的首选方法是GenericBeanDefinition类。 GenericBeanDefinition的优势在于，它允许动态定义父依赖项，而不是将角色“硬编码”为根bean定义。
+ * 也可以看看：
+ * GenericBeanDefinition ， ChildBeanDefinition
  */
 @SuppressWarnings("serial")
 public class RootBeanDefinition extends AbstractBeanDefinition {
