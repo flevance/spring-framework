@@ -765,6 +765,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Return a callback for creating an instance of the bean, if any.
+	 * 返回用于创建bean实例的回调（如果有）。
 	 * @since 5.0
 	 */
 	@Nullable
@@ -923,6 +924,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Return if there are method overrides defined for this bean.
+	 * 如果为此bean定义了方法重写，则返回
 	 * @since 5.0.2
 	 */
 	public boolean hasMethodOverrides() {
@@ -1131,9 +1133,11 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	 * Validate and prepare the method overrides defined for this bean.
 	 * Checks for existence of a method with the specified name.
 	 * @throws BeanDefinitionValidationException in case of validation failure
+	 * 验证并准备为此bean定义的方法替代。 检查是否存在具有指定名称的方法。
 	 */
 	public void prepareMethodOverrides() throws BeanDefinitionValidationException {
 		// Check that lookup methods exist and determine their overloaded status.
+		// 检查查找方法是否存在，并确定其重载状态。
 		if (hasMethodOverrides()) {
 			getMethodOverrides().getOverrides().forEach(this::prepareMethodOverride);
 		}
@@ -1155,6 +1159,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 		}
 		else if (count == 1) {
 			// Mark override as not overloaded, to avoid the overhead of arg type checking.
+			// 将替代标记为未过载，以避免arg类型检查的开销。
 			mo.setOverloaded(false);
 		}
 	}

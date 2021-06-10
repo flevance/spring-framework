@@ -335,6 +335,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 				}
 
 				// Create bean instance.
+				// 创建bean实例。
 				if (mbd.isSingleton()) {
 					sharedInstance = getSingleton(beanName, () -> {
 						try {
@@ -355,6 +356,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 					// It's a prototype -> create a new instance.
 					Object prototypeInstance = null;
 					try {
+						// 创建原型之前进行回调。
+						// 默认实现将原型注册为当前正在创建中。
 						beforePrototypeCreation(beanName);
 						prototypeInstance = createBean(beanName, mbd, args);
 					}
@@ -974,6 +977,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 * that will get applied to singleton beans on creation.
 	 * @see #addBeanPostProcessor
 	 * @see org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor
+	 * 返回此工厂是否持有InstantiationAwareBeanPostProcessor，它将在创建时应用于单例bean。
 	 */
 	protected boolean hasInstantiationAwareBeanPostProcessors() {
 		return this.hasInstantiationAwareBeanPostProcessors;
@@ -1496,6 +1500,16 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 * (also signals that the returned {@code Class} will never be exposed to application code)
 	 * @return the resolved bean class (or {@code null} if none)
 	 * @throws CannotLoadBeanClassException if we failed to load the class
+	 * 为指定的bean定义解析bean类，将bean类名解析为Class引用（如果需要），并将解析后的Class存储在bean定义中以备将来使用。
+	 *
+	 * 参数：
+	 * mbd –用于确定类的合并bean定义
+	 * beanName – bean的名称（用于错误处理）
+	 * typesToMatch –在内部类型匹配的情况下要匹配的类型（也表示返回的Class将永远不会暴露给应用程序代码）
+	 * 返回值：
+	 * 解析的bean类（如果没有，则为null ）
+	 * 抛出：
+	 * CannotLoadBeanClassException如果我们无法加载类
 	 */
 	@Nullable
 	protected Class<?> resolveBeanClass(RootBeanDefinition mbd, String beanName, Class<?>... typesToMatch)
@@ -1794,6 +1808,12 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 * but only if it hasn't been used for other purposes than type checking.
 	 * @param beanName the name of the bean
 	 * @return {@code true} if actually removed, {@code false} otherwise
+	 * 删除给定bean名称的单例实例（如果有的话），但前提是该类型仅用于类型检查以外的用途。
+	 *
+	 * 参数：
+	 * beanName –豆的名称
+	 * 返回值：
+	 * 如果实际删除则为true ，否则为false
 	 */
 	protected boolean removeSingletonIfCreatedForTypeCheckOnly(String beanName) {
 		if (!this.alreadyCreated.contains(beanName)) {
@@ -1917,6 +1937,12 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 * @see RootBeanDefinition#getDependsOn
 	 * @see #registerDisposableBean
 	 * @see #registerDependentBean
+	 * 将给定bean添加到该工厂的一次性bean列表中，注册其DisposableBean接口和/或在工厂关闭时调用给定的destroy方法（如果适用）。 仅适用于单例。
+	 *
+	 * 参数：
+	 * beanName –豆的名称
+	 * bean – bean实例
+	 * mbd – Bean的bean定义
 	 */
 	protected void registerDisposableBeanIfNecessary(String beanName, Object bean, RootBeanDefinition mbd) {
 		AccessControlContext acc = (System.getSecurityManager() != null ? getAccessControlContext() : null);

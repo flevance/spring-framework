@@ -132,6 +132,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	}
 
 	/**
+	 * 将给定的单例对象添加到该工厂的单例缓存中。
 	 * Add the given singleton object to the singleton cache of this factory.
 	 * <p>To be called for eager registration of singletons.
 	 * @param beanName the name of the bean
@@ -153,6 +154,12 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	 * resolve circular references.
 	 * @param beanName the name of the bean
 	 * @param singletonFactory the factory for the singleton object
+	 * 如有必要，添加给定的单例工厂以构建指定的单例。
+	 * 被要求急于注册单身人士，例如能够解析循环引用。
+	 *
+	 * 参数：
+	 * beanName –bean的名称
+	 * singletonFactory –单例对象的工厂
 	 */
 	protected void addSingletonFactory(String beanName, ObjectFactory<?> singletonFactory) {
 		Assert.notNull(singletonFactory, "Singleton factory must not be null");
@@ -478,7 +485,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 		if (dependentBeans == null) {
 			return false;
 		}
-		// 如果依赖的Bean的Set中含有依赖的这个Bean,则return TRUE
+		// 如果依赖的Bean的Set中含有依赖的这个Bean,则return TRUE(???)
 		if (dependentBeans.contains(dependentBeanName)) {
 			return true;
 		}

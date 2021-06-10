@@ -15,13 +15,12 @@ public class MyBeanPostProcessor implements BeanDefinitionRegistryPostProcessor 
 
 	@Override
 	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-		;
 		System.out.println("Before加载:postProcessBeanDefinitionRegistry");
 	}
 
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-		System.out.println("postProcessBeanFactory");
+		System.out.println("After加载:postProcessBeanFactory");
 	}
 
 

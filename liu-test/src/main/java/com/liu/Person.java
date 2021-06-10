@@ -1,6 +1,9 @@
 package com.liu;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.SmartInitializingSingleton;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
 
 /**
  * @author ljt
@@ -8,7 +11,7 @@ import org.springframework.beans.factory.SmartInitializingSingleton;
  * @date 2021/05/07 上午11:50
  * @Version 1.0.0
  */
-public class Person implements SmartInitializingSingleton {
+public class Person  {
 
 	private int age;
 
@@ -30,10 +33,7 @@ public class Person implements SmartInitializingSingleton {
 		this.name = name;
 	}
 
-	@Override
-	public void afterSingletonsInstantiated() {
-		System.out.println("afterSingletonsInstantiated: Person初始化的结果是:" + this.toString());
-	}
+
 
 	@Override
 	public String toString() {
